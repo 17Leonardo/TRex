@@ -1,0 +1,48 @@
+var trex, trex_running, edges;
+
+var solo, solo2;
+
+function preload(){
+  trex_running = loadAnimation("trex1.png","trex3.png","trex4.png");
+  solo2 = loadImage ("ground2.png");
+}
+
+function setup(){
+  createCanvas(600,200);
+  
+  //criando o trex
+  trex = createSprite(50,160,20,50);
+  trex.addAnimation("running", trex_running);
+  edges = createEdgeSprites();
+
+  solo = createSprite (300,200,600,10);
+  solo.addImage("chão", solo2);
+  solo.velocityX = -6
+
+  //adicione dimensão e posição ao trex
+  trex.scale = 0.5;
+  trex.x = 50
+}
+
+
+function draw(){
+  //definir a cor do plano de fundo 
+  background("white");
+  
+  //registrando a posição y do trex
+  console.log(trex.y)
+  
+  if(solo.x <=0){
+    solo.x = solo.width / 2
+  }
+  //pular quando tecla de espaço for pressionada
+  if(keyDown("space")){
+    trex.velocityY = -10;
+  }
+  
+  trex.velocityY = trex.velocityY + 0.5;
+  
+ //impedir que o trex caia
+  trex.collide(solo)
+  drawSprites();
+}
